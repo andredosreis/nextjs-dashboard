@@ -12,7 +12,7 @@ export default function Page() {
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
         <h1 className={`${lusitana.className}text-4xl font-bold text-white md:text-4xl `}>
-          Bem vindo ao Acme
+          Acme Dashboard
         </h1>
        
         {/* <AcmeLogo /> */}
