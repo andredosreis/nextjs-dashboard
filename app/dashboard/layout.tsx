@@ -17,7 +17,7 @@ export default function DashboardLayout({children}: {children: React.ReactNode})
                 <span className={lusitana.className}>Customers</span>
             </Link>
             <Link href="/dashboard/invoices" className={linkClass('/dashboard/invoices')}>
-                <span className={lusitana.className}> Invoices </span>
++                 <span className={lusitana.className}>Invoices</span>
             </Link>
             </nav>
             <main className="flex-1 p-6">
