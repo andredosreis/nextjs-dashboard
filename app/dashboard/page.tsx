@@ -1,4 +1,5 @@
 
+export const revalidate = 60; // Disable revalidation for this page
 
 export default function DashboardPage() {
 

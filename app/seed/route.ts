@@ -1,8 +1,9 @@
 // app/seed/route.ts
 import { NextResponse } from 'next/server'
 import postgres from 'postgres'
-import { invoices, customers, revenue, users } from '../lib/placeholder-data'
 import bcrypt from 'bcrypt'
+import { users, customers, invoices, revenue } from '@/app/lib/placeholder-data'
+
 
 const sql = postgres(process.env.DATABASE_URL!, { ssl: 'require' })
 

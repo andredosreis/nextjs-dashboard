@@ -7,9 +7,11 @@ import {
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
+  LatestInvoice,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import LatestInvoices from '../ui/dashboard/latest-invoices';
 
 
 // Cria o client Neon
@@ -37,24 +39,28 @@ export async function fetchRevenue() {
   }
 }
 
-export async function fetchLatestInvoices() {
-  try {
-    const data = await sql`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      ORDER BY invoices.date DESC
-      LIMIT 5`;
-
-    const latestInvoices = data.map((invoice) => ({
-      ...invoice,
-      amount: formatCurrency(invoice.amount),
-    }));
-    return latestInvoices;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch the latest invoices.');
-  }
+export async function fetchLatestInvoices(): Promise<LatestInvoice[]> {
+  // 1. Pegue o raw conforme seu tipo
+  const raw  = await sql`
+    SELECT
+      invoices.id,
+      invoices.amount,
+      customers.name,
+      customers.image_url,
+      customers.email
+    FROM invoices
+    JOIN customers ON invoices.customer_id = customers.id
+    ORDER BY invoices.date DESC
+    LIMIT 5
+  `
+  // 2. Mapeie para LatestInvoice, formatando amount
+  return raw.map((inv) => ({
+    id: inv.id,
+    name: inv.name,
+    image_url: inv.image_url,
+    email: inv.email,
+    amount: formatCurrency(inv.amount),
+  }))
 }
 
 export async function fetchCardData() {
