@@ -1,5 +1,5 @@
 // app/dashboard/invoices/page.tsx
-import { Suspense } from 'react'
+import { Suspense } from "react"
 import { fetchFilteredInvoices, fetchInvoicesPages } from '@/app/lib/data'
 import Link from 'next/link'
 import type { InvoicesTable } from '@/app/lib/definitions'
