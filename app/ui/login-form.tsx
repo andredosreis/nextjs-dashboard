@@ -28,9 +28,10 @@ export default function LoginForm() {
 
   // Se erro, mostre no formulário
   if (res?.error) {
-     window.location.href = "/dashboard";
+   
     // Aqui você pode usar um state para mostrar mensagem de erro
   } else if (res?.ok) {
+      window.location.href = "/dashboard";
     // Redireciona para o dashboard, por exemplo
    
   }

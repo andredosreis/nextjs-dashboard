@@ -1,24 +1,27 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+export const { handlers, auth } = NextAuth({
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       credentials: {
-        email: { label: "email", type: "text", placeholder: "Email" },
-        password: { label: "Password", type: "password" }
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (credentials?.email === "admin" && credentials.password === "admin") {
+        if (
+          credentials?.email === "byui@edu" &&
+          credentials.password === "byui123"
+        ) {
           return { id: "1", name: "Admin" };
         }
         return null;
-      }
-    })
+      },
+    }),
   ],
-  pages: {
-    signIn: "/login",
-  },
+  pages: { signIn: "/login" },
 });
 
-export { handler as GET, handler as POST };
+// exponha os métodos HTTP necessários para o NextAuth
+export const { GET, POST } = handlers;
