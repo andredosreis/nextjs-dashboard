@@ -1,3 +1,5 @@
+'use client';
+
 import { lusitana } from '@/app/ui/fonts';
 import {
   AtSymbolIcon,
@@ -6,10 +8,35 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+
+  const formData = new FormData(event.currentTarget);
+  const email = formData.get('email');
+  const password = formData.get('password');
+
+  // Chama NextAuth para autenticar
+  const res = await signIn('credentials', {
+    redirect: false,
+    email: email,   // para o provider Credentials, geralmente é username
+    password: password,
+  });
+  console.log("Login response:", res);
+
+  // Se erro, mostre no formulário
+  if (res?.error) {
+     window.location.href = "/dashboard";
+    // Aqui você pode usar um state para mostrar mensagem de erro
+  } else if (res?.ok) {
+    // Redireciona para o dashboard, por exemplo
+   
+  }
+}
   return (
-    <form className="space-y-3">
+    <form className="space-y-3" onSubmit={handleSubmit} >
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
